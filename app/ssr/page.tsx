@@ -28,7 +28,7 @@ export default async function SSRPage() {
       <main className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <img src="/file.svg" alt="File" className="w-12 h-12 mx-auto mb-4" />
-          <h1 className="text-4xl font-bold text-green-600">Server Side Rendering</h1>
+          <h1 className="text-4xl font-bold text-green-600">Server Side Rendering...</h1>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {users.map((user, index) => (
