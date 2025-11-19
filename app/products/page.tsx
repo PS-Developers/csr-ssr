@@ -8,30 +8,46 @@ export default async function ProductsPage() {
   const res = await fetch('https://api.restful-api.dev/objects');
   const products: Product[] = await res.json();
 
+  const colors = [
+    'from-pink-500 to-rose-500',
+    'from-blue-500 to-cyan-500', 
+    'from-purple-500 to-indigo-500',
+    'from-green-500 to-emerald-500',
+    'from-orange-500 to-red-500',
+    'from-teal-500 to-blue-500'
+  ];
+
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-black dark:text-white mb-8">
-          Mobile Products
-        </h1>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900 p-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
+            Mobile Products
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300">Discover amazing mobile devices</p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {products.map((product, index) => (
             <div
               key={product.id}
-              className="bg-white dark:bg-zinc-800 p-6 rounded-lg shadow-md"
+              className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
             >
-              <h2 className="text-xl font-semibold text-black dark:text-white mb-2">
-                {product.name}
-              </h2>
-              {product.data && (
-                <div className="text-sm text-gray-600 dark:text-gray-300">
-                  {Object.entries(product.data).map(([key, value]) => (
-                    <div key={key} className="mb-1">
-                      <span className="font-medium">{key}:</span> {String(value)}
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className={`absolute inset-0 bg-gradient-to-br ${colors[index % colors.length]} opacity-90`}></div>
+              <div className="relative bg-white/90 dark:bg-black/80 backdrop-blur-sm p-6 h-full">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 group-hover:text-white transition-colors">
+                  {product.name}
+                </h2>
+                {product.data && (
+                  <div className="space-y-2">
+                    {Object.entries(product.data).map(([key, value]) => (
+                      <div key={key} className="flex justify-between items-center p-2 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                        <span className="font-semibold text-gray-700 dark:text-gray-200 capitalize">{key}:</span>
+                        <span className="text-gray-600 dark:text-gray-300 font-medium">{String(value)}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>
