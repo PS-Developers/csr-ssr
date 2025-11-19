@@ -28,6 +28,17 @@ jobs:
           npm install
           npm run build
 
+      - name: Check build output
+        run: |
+          echo "Build completed. Checking output:"
+          ls -la
+          if [ -d ".next" ]; then
+            echo ".next folder created successfully"
+            ls -la .next/
+          else
+            echo ".next folder not found - build may have failed"
+          fi
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -37,6 +48,7 @@ jobs:
             package.json
             public/
             server.js
+          include-hidden-files: true
 
   deploy:
     runs-on: ubuntu-latest
