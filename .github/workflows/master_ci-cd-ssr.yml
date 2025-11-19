@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .  # Ensure this points to the right build directory (e.g., .next if applicable)
+          path: .next  # Ensure this points to the right build directory (e.g., .next if applicable)
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,5 +61,3 @@ jobs:
           app-name: 'ci-cd-ssr'
           slot-name: 'Production'
           package: './.next'  # Ensure this points to the build output folder
-          platform: 'nodejs'  # Explicitly set Node.js platform
-          platform-version: '24'  # Use an appropriate version of Node.js (e.g., 16.x or 18.x)
