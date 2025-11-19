@@ -16,6 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4  # Checkout the source code from the repository
 
+      - name: Set up Azure CLI
+        uses: azure/setup-azurecli@v2  # Set up Azure CLI on the runner
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -23,17 +26,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: Deploy the source code to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'ci-cd-ssr'  # The name of your Azure Web App
           slot-name: 'Production'  # Deploy to the production slot
           package: '.'  # Deploy the entire source code (not just .next)
 
-      - name: Set startup command on Azure Web App
-        uses: azure/azure-webapps-set-startup-command@v1
-        with:
-          app-name: 'ci-cd-ssr'
-          startup-command: |
-            npm install && npm run build && npm run start
