@@ -18,21 +18,25 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '24.x'  # Use an LTS version like 16.x or 18.x
+          node-version: '16.x'  # Use a stable LTS version like 16.x or 18.x
 
       - name: Install dependencies
         run: |
-          npm install # This generates the `node modules` folder
+          npm install  # This generates the `node_modules` folder
 
       - name: Build the Next.js app
         run: |
           npm run build  # This generates the `.next` folder
-         
+
+      - name: Verify .next folder
+        run: |
+          ls -alh .next  # List contents of the .next folder to ensure it exists
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .  # Ensure this points to the right build directory (e.g., .next if applicable)
+          path: .next  # Upload only the .next build output
 
   deploy:
     runs-on: ubuntu-latest
@@ -46,7 +50,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-      
+
+      - name: Verify contents of downloaded artifact
+        run: |
+          ls -alh  # Verify that the .next folder exists in the downloaded artifact
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -60,4 +68,4 @@ jobs:
         with:
           app-name: 'ci-cd-ssr'
           slot-name: 'Production'
-  
+          package: './.next'  # Ensure this points to the build output folder (.next)
