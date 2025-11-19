@@ -51,6 +51,16 @@ jobs:
         with:
           name: node-app
       
+      - name: Display downloaded files
+        run: |
+          echo "Current directory contents:"
+          ls -la
+          echo "Checking for .next folder:"
+          ls -la .next/ || echo ".next folder not found"
+          echo "Checking for other files:"
+          ls -la package.json || echo "package.json not found"
+          ls -la server.js || echo "server.js not found"
+          ls -la public/ || echo "public folder not found"
 
       - name: Login to Azure
         uses: azure/login@v2
