@@ -58,6 +58,8 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'ci-cd-ssr'  # Ensure this matches your Azure App Service name
-          slot-name: 'Production'  # Adjust if using a staging slot
-          package: './'  # Ensure this points to the correct build directory (e.g., .next or the root dir)
+          app-name: 'ci-cd-ssr'
+          slot-name: 'Production'
+          package: './.next'  # Ensure this points to the build output folder
+          platform: 'nodejs'  # Explicitly set Node.js platform
+          platform-version: '24'  # Use an appropriate version of Node.js (e.g., 16.x or 18.x)
