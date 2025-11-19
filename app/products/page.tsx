@@ -1,12 +1,21 @@
-interface Product {
-  id: string;
-  name: string;
-  data: any;
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  age: number;
+  image: string;
+  company: {
+    name: string;
+    title: string;
+  };
 }
 
-export default async function ProductsPage() {
-  const res = await fetch('https://api.restful-api.dev/objects');
-  const products: Product[] = await res.json();
+export default async function UsersPage() {
+  const res = await fetch('https://dummyjson.com/users');
+  const data = await res.json();
+  const users: User[] = data.users;
 
   const colors = [
     'from-pink-500 to-rose-500',
@@ -22,31 +31,42 @@ export default async function ProductsPage() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-4">
-            Mobile Products
+            List of Users
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">Discover amazing mobile devices</p>
+          <p className="text-lg text-gray-600 dark:text-gray-300">Meet our amazing community</p>
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((product, index) => (
+          {users.map((user, index) => (
             <div
-              key={product.id}
+              key={user.id}
               className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${colors[index % colors.length]} opacity-90`}></div>
               <div className="relative bg-white/90 dark:bg-black/80 backdrop-blur-sm p-6 h-full">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 group-hover:text-white transition-colors">
-                  {product.name}
-                </h2>
-                {product.data && (
-                  <div className="space-y-2">
-                    {Object.entries(product.data).map(([key, value]) => (
-                      <div key={key} className="flex justify-between items-center p-2 bg-white/50 dark:bg-gray-800/50 rounded-lg">
-                        <span className="font-semibold text-gray-700 dark:text-gray-200 capitalize">{key}:</span>
-                        <span className="text-gray-600 dark:text-gray-300 font-medium">{String(value)}</span>
-                      </div>
-                    ))}
+                <div className="flex items-center mb-4">
+                  <img src={user.image} alt={user.firstName} className="w-16 h-16 rounded-full mr-4" />
+                  <div>
+                    <h2 className="text-xl font-bold text-gray-800 dark:text-white group-hover:text-white transition-colors">
+                      {user.firstName} {user.lastName}
+                    </h2>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Age: {user.age}</p>
                   </div>
-                )}
+                </div>
+                <div className="space-y-2">
+                  <div className="p-2 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                    <span className="font-semibold text-gray-700 dark:text-gray-200">Email:</span>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{user.email}</p>
+                  </div>
+                  <div className="p-2 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                    <span className="font-semibold text-gray-700 dark:text-gray-200">Phone:</span>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{user.phone}</p>
+                  </div>
+                  <div className="p-2 bg-white/50 dark:bg-gray-800/50 rounded-lg">
+                    <span className="font-semibold text-gray-700 dark:text-gray-200">Company:</span>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{user.company.name}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{user.company.title}</p>
+                  </div>
+                </div>
               </div>
             </div>
           ))}

@@ -24,7 +24,7 @@ export default function Home() {
             href="/products"
             className="px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
           >
-            Mobile Products
+            List of Users
           </Link>
         </div>
       </main>
