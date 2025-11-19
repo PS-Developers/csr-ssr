@@ -20,10 +20,13 @@ jobs:
         with:
           node-version: '24.x'  # Use an LTS version like 16.x or 18.x
 
-      - name: npm install, build, and test
+      - name: Install dependencies
         run: |
-          npm install
-          npm run build --if-present
+          npm install # This generates the `node modules` folder
+
+      - name: Build the Next.js app
+        run: |
+          npm run build  # This generates the `.next` folder
          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
