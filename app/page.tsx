@@ -29,7 +29,7 @@ export default function Home() {
         </div>
         <div>
           <p>
-            {process.env.DISPLAY_TEXT}
+            {process.env.NEXT_PUBLIC_DISPLAY_TEXT}
           </p>
         </div>
       </main>
