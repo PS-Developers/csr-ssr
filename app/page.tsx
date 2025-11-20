@@ -27,6 +27,11 @@ export default function Home() {
             List of Users
           </Link>
         </div>
+        <div>
+          <p>
+            {process.env.DISPLAY_TEXT}
+          </p>
+        </div>
       </main>
     </div>
   );
